@@ -1,4 +1,7 @@
+// var Skycons = require("react-skycons");
 import React from "react";
+
+import Skycons from "react-skycons";
 
 export default class WeatherApp extends React.Component {
   constructor(props) {
@@ -8,10 +11,12 @@ export default class WeatherApp extends React.Component {
       lat: null,
       timezone: null,
       summary: null,
-      temperature: null
+      temperature: null,
+      icon: null
     };
+    this.ref = React.createRef();
+    // this.setIcon = this.setIcon.bind(this);
   }
-
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -26,12 +31,16 @@ export default class WeatherApp extends React.Component {
             return res.json();
           })
           .then(data => {
+            console.log(data);
             const { timezone } = data;
-            const { summary, temperature } = data.currently;
+            const { summary, temperature, icon } = data.currently;
+            const iconModded = icon.replace(/-/g, "_").toUpperCase();
+
             this.setState({
               timezone: timezone,
               summary: summary,
-              temperature: temperature
+              temperature: temperature,
+              icon: iconModded
             });
           });
       });
@@ -42,10 +51,31 @@ export default class WeatherApp extends React.Component {
     }
   }
   render() {
+    if (
+      this.state.timzone === null ||
+      this.state.summary === null ||
+      this.state.temperature === null
+    ) {
+      return (
+        <div>
+          <p className="loadingScreen">Loading ...</p>
+        </div>
+      );
+    }
     return (
       <div>
         <p className="country">{this.state.timezone}</p>
         <p className="celicius">{this.state.temperature}</p>
+        <div className="icon">
+          {" "}
+          <Skycons
+            height="200"
+            width="200"
+            color="black"
+            icon={this.state.icon}
+          />
+        </div>
+
         <p className="description">{this.state.summary}</p>
       </div>
     );
