@@ -29,7 +29,7 @@ export default class WeatherApp extends React.Component {
         // Use proxy if you want to Run it Locally ;)
 
         // const api = `https://api.darksky.net/forecast/9cf4efbb3abf34df3415d1db93aad9d6/${this.state.lat},${this.state.long}`;
-        fetch(api)
+        fetch(api, { mode: "no-cors" })
           .then(res => {
             return res.json();
           })
