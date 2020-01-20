@@ -24,7 +24,7 @@ export default class WeatherApp extends React.Component {
           lat: position.coords.latitude
         });
 
-        //  const proxy = "https://cors-anywhere.herokuapp.com/"; // this can be deleted when official launch
+        // const proxy = "https://cors-anywhere.herokuapp.com/"; // this can be deleted when official launch
         // const api = `${proxy}https://api.darksky.net/forecast/9cf4efbb3abf34df3415d1db93aad9d6/${this.state.lat},${this.state.long}`;
         // Use proxy if you want to Run it Locally ;)
 
@@ -47,10 +47,6 @@ export default class WeatherApp extends React.Component {
             });
           });
       });
-    } else {
-      alert(
-        "You need to give Access To Your Location in Order to Track you and give you info about the weather in your city"
-      );
     }
   }
 
