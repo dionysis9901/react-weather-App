@@ -5,12 +5,10 @@ function App() {
   return (
     <div className="App">
       <header>
-        <p className="header__heading">Weather Appliaction</p>
+        <p className="header__heading">Sky Checker</p>
       </header>
-      <main>
-        <WeatherApp />
-      </main>
-      <footer>
+      <WeatherApp />
+      <footer className="footer">
         <p className="footer__text">Made by Dionysis Koufis With React</p>
       </footer>
     </div>

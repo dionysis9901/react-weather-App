@@ -1,6 +1,4 @@
-// var Skycons = require("react-skycons");
 import React from "react";
-
 import Skycons from "react-skycons";
 
 export default class WeatherApp extends React.Component {
@@ -15,7 +13,7 @@ export default class WeatherApp extends React.Component {
       icon: null
     };
     this.ref = React.createRef();
-    // this.setIcon = this.setIcon.bind(this);
+    this.toCelsius = this.toCelsius.bind(this);
   }
   componentDidMount() {
     if (navigator.geolocation) {
@@ -35,20 +33,24 @@ export default class WeatherApp extends React.Component {
             const { timezone } = data;
             const { summary, temperature, icon } = data.currently;
             const iconModded = icon.replace(/-/g, "_").toUpperCase();
-
+            const temperatureCel = Math.floor(this.toCelsius(temperature));
             this.setState({
               timezone: timezone,
               summary: summary,
-              temperature: temperature,
+              temperature: temperatureCel,
               icon: iconModded
             });
           });
       });
     } else {
       alert(
-        "You need to give Access To Your Location in Order to Track you and give you info about the weather"
+        "You need to give Access To Your Location in Order to Track you and give you info about the weather in your city"
       );
     }
+  }
+
+  toCelsius(f) {
+    return (5 / 9) * (f - 32);
   }
   render() {
     if (
@@ -63,10 +65,10 @@ export default class WeatherApp extends React.Component {
       );
     }
     return (
-      <div>
-        <p className="country">{this.state.timezone}</p>
-        <p className="celicius">{this.state.temperature}</p>
-        <div className="icon">
+      <div className="info">
+        <p className="info__country"> {this.state.timezone}</p>
+        <p className="info__celicius">{this.state.temperature} °C</p>
+        <div className="info__icon">
           {" "}
           <Skycons
             height="200"
@@ -76,7 +78,7 @@ export default class WeatherApp extends React.Component {
           />
         </div>
 
-        <p className="description">{this.state.summary}</p>
+        <p className="info__description">{this.state.summary}</p>
       </div>
     );
   }
